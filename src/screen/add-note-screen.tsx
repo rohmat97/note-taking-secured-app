@@ -1,26 +1,40 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import FloatingButton from "../component/FloatingButton";
 import { useNote } from "../hooks/use-note";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
+import {
+  useNavigation,
+  NavigationProp,
+  useRoute,
+} from "@react-navigation/native";
 
 const AddNoteScreen = () => {
   const [note, setNotes] = useState(""); // State to hold the note text
   const { goBack } = useNavigation<NavigationProp<any>>();
-  const { setNote } = useNote();
+  const { setNote, deleteNote } = useNote();
+  const { params } = useRoute();
 
-  const handleAddNote = useCallback(() => {
+  const handleAddNote = useCallback(async () => {
     // Handle the submission of the new note here
     // You can save it to your data source, state, or perform any desired action
     console.log("New note:", note);
-    setNote(note);
+    if (params) await deleteNote(params);
+    await setNote(note);
     goBack();
   }, [note]);
+
+  useEffect(() => {
+    if (params) {
+      setNotes(params as unknown as string);
+    }
+  }, [params]);
 
   return (
     <View style={styles.container}>
       <View style={{ flex: 1, flexGrow: 3, justifyContent: "center" }}>
-        <Text style={styles.label}>Add a New Note:</Text>
+        <Text style={styles.label}>
+          {params ? "Edit Note:" : "Add a New Note:"}
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your note"
@@ -29,7 +43,10 @@ const AddNoteScreen = () => {
           multiline
         />
       </View>
-      <FloatingButton label="Add Note" action={handleAddNote} />
+      <FloatingButton
+        label={params ? "Edit Note" : "Add Note"}
+        action={handleAddNote}
+      />
     </View>
   );
 };

@@ -14,6 +14,16 @@ export const NoteProvider = ({ children }: { children: React.ReactNode }) => {
     [listNote]
   );
 
+  const deleteNote = useCallback(
+    (payload: string) => {
+      const filteredMessages = listNote.filter(
+        (message) => message !== payload
+      );
+      setlistNote(filteredMessages);
+      storage.set("notes", JSON.stringify(filteredMessages));
+    },
+    [listNote]
+  );
   useEffect(() => {
     // Load existing notes from MMKV on component mount
     const savedNotes = storage.getString("notes");
@@ -26,8 +36,9 @@ export const NoteProvider = ({ children }: { children: React.ReactNode }) => {
     () => ({
       listNote,
       setNote,
+      deleteNote,
     }),
-    [listNote, setNote]
+    [listNote, setNote, deleteNote]
   );
 
   return (

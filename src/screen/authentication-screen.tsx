@@ -39,7 +39,7 @@ const AuthenticationScreen = () => {
   }, []);
 
   useEffect(() => {
-    // if (biometricSupport) authenticateBiometric();
+    if (biometricSupport) authenticateBiometric();
   }, [biometricSupport]);
 
   const authenticateBiometric = () => {
