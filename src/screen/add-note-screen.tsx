@@ -1,14 +1,57 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useCallback, useState } from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import FloatingButton from "../component/FloatingButton";
+import { useNote } from "../hooks/use-note";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 const AddNoteScreen = () => {
+  const [note, setNotes] = useState(""); // State to hold the note text
+  const { goBack } = useNavigation<NavigationProp<any>>();
+  const { setNote } = useNote();
+
+  const handleAddNote = useCallback(() => {
+    // Handle the submission of the new note here
+    // You can save it to your data source, state, or perform any desired action
+    console.log("New note:", note);
+    setNote(note);
+    goBack();
+  }, [note]);
+
   return (
-    <View>
-      <Text>AddNoteScreen</Text>
+    <View style={styles.container}>
+      <View style={{ flex: 1, flexGrow: 3, justifyContent: "center" }}>
+        <Text style={styles.label}>Add a New Note:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your note"
+          onChangeText={(text) => setNotes(text)}
+          value={note}
+          multiline
+        />
+      </View>
+      <FloatingButton label="Add Note" action={handleAddNote} />
     </View>
   );
 };
 
-export default AddNoteScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#808080",
+  },
+  label: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+    minHeight: 100,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default AddNoteScreen;

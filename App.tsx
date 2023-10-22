@@ -8,10 +8,13 @@
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import { MainStackNavigation } from "./src/navigation/MainStackNavigation";
+import { NoteProvider } from "./src/provider/note-provider";
 function App(): JSX.Element {
   return (
     <NavigationContainer>
-      <MainStackNavigation />
+      <NoteProvider>
+        <MainStackNavigation />
+      </NoteProvider>
     </NavigationContainer>
   );
 }
