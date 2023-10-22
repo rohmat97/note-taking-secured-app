@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import FloatingButton from "../component/FloatingButton";
-import { useNote } from "../hooks/use-note";
+import FloatingButton from "../../component/FloatingButton";
+import { useNote } from "../../hooks/use-note";
 import {
   useNavigation,
   NavigationProp,

@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import DashboardScreen from "../screen/dashboard.screen";
-import AddNoteScreen from "../screen/add-note-screen";
-import AuthenticationScreen from "../screen/authentication-screen";
-import LandingScreen from "../screen/landing-screen";
+import DashboardScreen from "../screen/Dashboard/dashboard-screen";
+import AddNoteScreen from "../screen/AddNote/add-note-screen";
+import AuthenticationScreen from "../screen/AuthPage/authentication-screen";
+import LandingScreen from "../screen/LandingPage/landing-screen";
 
 const MainStack = createNativeStackNavigator();
 

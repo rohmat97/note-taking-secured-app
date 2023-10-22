@@ -7,7 +7,7 @@ interface Props {
 }
 const FloatingButton = ({ action, label }: Props) => {
   return (
-    <View style={styles.container}>
+    <View testID="floating-button" style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={action}>
         <Text style={styles.buttonText}>{label}</Text>
       </TouchableOpacity>

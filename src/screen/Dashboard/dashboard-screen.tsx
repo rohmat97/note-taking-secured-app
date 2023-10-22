@@ -7,8 +7,8 @@ import {
   View,
 } from "react-native";
 import React, { useCallback } from "react";
-import { useNote } from "../hooks/use-note";
-import FloatingButton from "../component/FloatingButton";
+import { useNote } from "../../hooks/use-note";
+import FloatingButton from "../../component/FloatingButton";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 const DashboardScreen = () => {

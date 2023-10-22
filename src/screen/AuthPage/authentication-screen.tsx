@@ -1,16 +1,13 @@
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 import {
-  Button,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import FingerprintScanner from "react-native-fingerprint-scanner";
 import TouchID from "react-native-touch-id";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import FloatingButton from "../component/FloatingButton";
 
 const AuthenticationScreen = () => {
   const [biometricSupport, setBiometricSupport] = useState(false);
@@ -19,7 +16,7 @@ const AuthenticationScreen = () => {
   const [password, setPassword] = useState("");
   useEffect(() => {
     // Check for biometric support
-    TouchID.isSupported()
+    TouchID?.isSupported()
       .then((supported) => {
         if (supported) {
           // Biometric authentication is available
@@ -31,11 +28,7 @@ const AuthenticationScreen = () => {
       });
 
     // Clean up when the component unmounts
-    return () => {
-      if (biometricSupport) {
-        FingerprintScanner.release();
-      }
-    };
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -44,17 +37,6 @@ const AuthenticationScreen = () => {
 
   const authenticateBiometric = () => {
     if (biometricSupport) {
-      // For Android (Fingerprint Scanner)
-      FingerprintScanner.authenticate({ description: "Scan your fingerprint" })
-        .then(() => {
-          // Fingerprint authentication successful
-          console.log("Fingerprint authentication successful");
-        })
-        .catch((error) => {
-          // Fingerprint authentication failed
-          console.log("Fingerprint authentication failed", error);
-        });
-
       // For iOS (Touch ID / Face ID)
       TouchID.authenticate("Authenticate with your biometrics")
         .then((success: any) => {
@@ -113,6 +95,7 @@ const AuthenticationScreen = () => {
       <View style={{ flex: 1, justifyContent: "center" }}>
         <Text style={styles.label}>Password:</Text>
         <TextInput
+          testID="password-input"
           style={styles.input}
           placeholder="Enter your password"
           secureTextEntry={true}
@@ -122,10 +105,18 @@ const AuthenticationScreen = () => {
       </View>
 
       <View style={{ rowGap: 32, marginBottom: 32 }}>
-        <TouchableOpacity style={styles.button} onPress={handlePasswordLogin}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handlePasswordLogin}
+          testID="password-button"
+        >
           <Text style={styles.buttonText}>Password Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={authenticateBiometric}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={authenticateBiometric}
+          testID="biometric"
+        >
           <Text style={styles.buttonText}>Biometric Login</Text>
         </TouchableOpacity>
         {biometricError ? (
